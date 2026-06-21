@@ -28,14 +28,14 @@ jobs:
       - name: Create font directory
         run: mkdir -p assets/fonts
 
-      - name: Download Padauk Regular
-        run: |
-          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQRboJg-id7OnbBW0poSFqS.ttf" -o assets/fonts/Padauk-Regular.ttf || true
+    - name: Download Padauk Regular
+  run: |
+    mkdir -p assets/fonts
+    curl -fL "https://github.com/google/fonts/raw/main/ofl/padauk/Padauk-Regular.ttf" -o assets/fonts/Padauk-Regular.ttf || true
 
-      - name: Download Padauk Bold
-        run: |
-          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQSboJg-id7Onb512DE1BQBCQ.ttf" -o assets/fonts/Padauk-Bold.ttf || true
-
+- name: Download Padauk Bold
+  run: |
+    curl -fL "https://github.com/google/fonts/raw/main/ofl/padauk/Padauk-Bold.ttf" -o assets/fonts/Padauk-Bold.ttf || true
       - name: Flutter pub get
         run: flutter pub get
 
