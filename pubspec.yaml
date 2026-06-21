@@ -1,0 +1,42 @@
+name: sms_myanmar
+description: မူလတန်းကျောင်း စီမံခန့်ခွဲမှု စနစ်
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  provider: ^6.1.2
+  shared_preferences: ^2.2.3
+  intl: ^0.19.0
+  cached_network_image: ^3.3.1
+  fl_chart: ^0.68.0
+  qr_flutter: ^4.1.0
+  mobile_scanner: ^5.2.3
+  google_fonts: ^6.2.1
+  shimmer: ^3.0.0
+  lottie: ^3.1.0
+  flutter_secure_storage: ^9.0.0
+  connectivity_plus: ^6.0.3
+  package_info_plus: ^8.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/animations/
+  fonts:
+    - family: Padauk
+      fonts:
+        - asset: assets/fonts/Padauk-Regular.ttf
+        - asset: assets/fonts/Padauk-Bold.ttf
+          weight: 700
