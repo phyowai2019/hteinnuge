@@ -2,7 +2,7 @@
 class ApiConfig {
   // ← GAS Web App URL ထည့်ပါ
   static const String gasUrl =
-      'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+      'https://script.google.com/macros/s/AKfycbzfZENGzuFlqfq3_RDpwRESZMpWn_TshFlGu6I3AX6S3CbRlXbjmgqgJsiz5lrOTDxePA/exec';
 
   static const Duration timeout = Duration(seconds: 30);
   static const String appName = 'မူလတန်းကျောင်း SMS';
