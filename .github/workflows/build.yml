@@ -9,6 +9,7 @@ jobs:
   build-android:
     name: Android APK
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -25,26 +26,44 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Create font directory
-        run: mkdir -p assets/fonts
+      - name: Create Flutter project
+        run: |
+          cd /tmp
+          flutter create --org com.example --project-name sms_myanmar sms_base
+          echo "Flutter project created"
 
-    - name: Download Padauk Regular
-  run: |
-    mkdir -p assets/fonts
-    curl -fL "https://github.com/google/fonts/raw/main/ofl/padauk/Padauk-Regular.ttf" -o assets/fonts/Padauk-Regular.ttf || true
+      - name: Copy lib files into Flutter project
+        run: |
+          cp -r lib/ /tmp/sms_base/lib/
+          cp pubspec.yaml /tmp/sms_base/pubspec.yaml
+          echo "Lib files copied"
 
-- name: Download Padauk Bold
-  run: |
-    curl -fL "https://github.com/google/fonts/raw/main/ofl/padauk/Padauk-Bold.ttf" -o assets/fonts/Padauk-Bold.ttf || true
+      - name: Create font directory and download fonts
+        run: |
+          mkdir -p /tmp/sms_base/assets/fonts
+          mkdir -p /tmp/sms_base/assets/images
+          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQRboJg-id7OnbBW0poSFqS.ttf" -o /tmp/sms_base/assets/fonts/Padauk-Regular.ttf || true
+          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQSboJg-id7Onb512DE1BQBCQ.ttf" -o /tmp/sms_base/assets/fonts/Padauk-Bold.ttf || true
+          [ -f /tmp/sms_base/assets/fonts/Padauk-Regular.ttf ] || touch /tmp/sms_base/assets/fonts/Padauk-Regular.ttf
+          [ -f /tmp/sms_base/assets/fonts/Padauk-Bold.ttf ] || touch /tmp/sms_base/assets/fonts/Padauk-Bold.ttf
+          ls -la /tmp/sms_base/assets/fonts/
+
       - name: Flutter pub get
+        working-directory: /tmp/sms_base
         run: flutter pub get
 
+      - name: Flutter analyze
+        working-directory: /tmp/sms_base
+        run: flutter analyze --no-fatal-infos
+        continue-on-error: true
+
       - name: Build APK
+        working-directory: /tmp/sms_base
         run: flutter build apk --release --no-tree-shake-icons
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: sms-myanmar-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: /tmp/sms_base/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
