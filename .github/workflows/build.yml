@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-android:
-    name: 🤖 Android APK
+    name: Android APK
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,18 +25,18 @@ jobs:
           channel: stable
           cache: true
 
-     
-      
-    - name: Download Padauk Font
+      - name: Create font directory
+        run: mkdir -p assets/fonts
+
+      - name: Download Padauk Regular
         run: |
-          mkdir -p assets/fonts
-          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQRboJg-id7OnbBW0poSFqS.ttf" \
-            -o assets/fonts/Padauk-Regular.ttf || echo "Font download failed, continuing"
-          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQSboJg-id7Onb512DE1BQBCQ.ttf" \
-            -o assets/fonts/Padauk-Bold.ttf || echo "Font download failed, continuing"
-          ls assets/fonts/ || true
-        continue-on-error: true
-      - name: pub get
+          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQRboJg-id7OnbBW0poSFqS.ttf" -o assets/fonts/Padauk-Regular.ttf || true
+
+      - name: Download Padauk Bold
+        run: |
+          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQSboJg-id7Onb512DE1BQBCQ.ttf" -o assets/fonts/Padauk-Bold.ttf || true
+
+      - name: Flutter pub get
         run: flutter pub get
 
       - name: Build APK
