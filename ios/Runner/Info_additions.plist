@@ -1,0 +1,10 @@
+<!-- Add these keys to your existing ios/Runner/Info.plist -->
+<key>NSCameraUsageDescription</key>
+<string>QR Code စစ်ဆေးရန် ကင်မရာ သုံးပါသည်</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>ဓာတ်ပုံ ရွေးချယ်ရန်</string>
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <false/>
+</dict>
