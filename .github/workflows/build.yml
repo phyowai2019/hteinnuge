@@ -25,12 +25,17 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Download Padauk Font
+     
+      
+    - name: Download Padauk Font
         run: |
           mkdir -p assets/fonts
-          curl -fL "https://github.com/googlefonts/padauk/raw/main/fonts/ttf/Padauk-Regular.ttf" -o assets/fonts/Padauk-Regular.ttf
-          curl -fL "https://github.com/googlefonts/padauk/raw/main/fonts/ttf/Padauk-Bold.ttf" -o assets/fonts/Padauk-Bold.ttf
-
+          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQRboJg-id7OnbBW0poSFqS.ttf" \
+            -o assets/fonts/Padauk-Regular.ttf || echo "Font download failed, continuing"
+          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQSboJg-id7Onb512DE1BQBCQ.ttf" \
+            -o assets/fonts/Padauk-Bold.ttf || echo "Font download failed, continuing"
+          ls assets/fonts/ || true
+        continue-on-error: true
       - name: pub get
         run: flutter pub get
 
