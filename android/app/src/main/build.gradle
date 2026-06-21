@@ -1,3 +1,11 @@
+android {
+    compileSdkVersion 34  // Or higher
+    
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 34
+    }
+}
 buildscript {
     ext.kotlin_version = '1.9.10'
     repositories {
