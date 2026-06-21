@@ -24,42 +24,30 @@ jobs:
         with:
           flutter-version: '3.24.0'
           channel: stable
-          cache: true
 
       - name: Create Flutter project
         run: |
-          cd /tmp
-          flutter create --org com.example --project-name sms_myanmar sms_base
-          echo "Flutter project created"
+          flutter create --org com.example --project-name sms_myanmar /tmp/sms_base
 
-      - name: Copy lib files into Flutter project
+      - name: Copy source files
         run: |
-          cp -r lib/ /tmp/sms_base/lib/
-          cp pubspec.yaml /tmp/sms_base/pubspec.yaml
-          echo "Lib files copied"
+          cp -rv lib/ /tmp/sms_base/lib/
+          cp -v pubspec.yaml /tmp/sms_base/pubspec.yaml
 
-      - name: Create font directory and download fonts
+      - name: Setup assets
         run: |
           mkdir -p /tmp/sms_base/assets/fonts
           mkdir -p /tmp/sms_base/assets/images
-          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQRboJg-id7OnbBW0poSFqS.ttf" -o /tmp/sms_base/assets/fonts/Padauk-Regular.ttf || true
-          curl -fL "https://fonts.gstatic.com/s/padauk/v16/RrQSboJg-id7Onb512DE1BQBCQ.ttf" -o /tmp/sms_base/assets/fonts/Padauk-Bold.ttf || true
-          [ -f /tmp/sms_base/assets/fonts/Padauk-Regular.ttf ] || touch /tmp/sms_base/assets/fonts/Padauk-Regular.ttf
-          [ -f /tmp/sms_base/assets/fonts/Padauk-Bold.ttf ] || touch /tmp/sms_base/assets/fonts/Padauk-Bold.ttf
-          ls -la /tmp/sms_base/assets/fonts/
+          touch /tmp/sms_base/assets/fonts/Padauk-Regular.ttf
+          touch /tmp/sms_base/assets/fonts/Padauk-Bold.ttf
 
-      - name: Flutter pub get
+      - name: pub get
         working-directory: /tmp/sms_base
-        run: flutter pub get
+        run: flutter pub get 2>&1
 
-      - name: Flutter analyze
+      - name: build apk
         working-directory: /tmp/sms_base
-        run: flutter analyze --no-fatal-infos
-        continue-on-error: true
-
-      - name: Build APK
-        working-directory: /tmp/sms_base
-        run: flutter build apk --release --no-tree-shake-icons
+        run: flutter build apk --release --no-tree-shake-icons 2>&1
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
